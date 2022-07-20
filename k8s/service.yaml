@@ -1,0 +1,17 @@
+---
+## Service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: app
+  labels:
+    app: flash-app
+  name: flash-app
+spec:
+  ports:
+  - name: "app"
+    port: 8080
+    targetPort: 5000
+  selector:
+    app: flash-app
+

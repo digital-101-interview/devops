@@ -1,0 +1,60 @@
+## Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+---
+## Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: app
+  labels:
+    app: flash-app
+  name: flash-app
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: flash-app
+  template:
+    metadata:
+      labels:
+        app: flash-app
+    spec:
+      containers:
+      - image: thanhnoi20/flash:latest
+        imagePullPolicy: Always
+        name: flash-app
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 6
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          timeoutSeconds: 10
+
+

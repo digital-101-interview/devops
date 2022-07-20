@@ -1,0 +1,15 @@
+jenkins:
+  name: jenkins
+  annotations: {}
+  storageClass: jenkins-sc
+
+  serviceAccount:
+    create: false
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    path: "/jenkins"
+    apiVersion: "extensions/v1beta1"
+    labels: {}
