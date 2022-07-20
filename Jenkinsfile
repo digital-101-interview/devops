@@ -16,11 +16,11 @@ pipeline {
                 echo "hello world"
             }
         }
-//         stage('Deploy'){
-//             steps {
-//                  sh 'kubectl apply -f k8s/'
-//             }
-//         }
+        stage('Deploy'){
+            steps {
+                 sh 'kubectl apply -f k8s/'
+            }
+        }
 
     }
 }
