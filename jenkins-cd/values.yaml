@@ -1,15 +1,19 @@
 jenkins:
-  name: jenkins
-  annotations: {}
   storageClass: jenkins-sc
-
   serviceAccount:
     create: false
-
+    name: jenkins
+    annotations: {}
+    imagePullSecretName:
+  serviceAccountAgent:
+    create: true
+    name: jenkins-saa
+    annotations: {}
+    imagePullSecretName:
   ingress:
+    enabled: false
+  agent:
     enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    path: "/jenkins"
-    apiVersion: "extensions/v1beta1"
-    labels: {}
+    image: "korekontrol/docker-jnlp-slave-docker"
+    tag: "latest"
+    workingDir: "/home/jenkins/agent"
